@@ -8,11 +8,11 @@
     <meta name="title" content="Happy Birthday | RajCode">
     <meta name="github" content="https://github.com/rajcode2006">
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="website icon" type="png" href="image/heart.png"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Have a Happy Birthday!</title>
+    
 </head>
 
 <body>
@@ -85,39 +85,72 @@
         </div>
     </div>
 
-
     <div id="copy">
         <p class="text-center text-white text-sm">IG Creator <a
                 href="https://www.instagram.com/rajcode_xs1dd?igsh=cDVnMDZxdmNtdHI4">@RajCode-xs1dd</a></p>
     </div>
+
+    <script>
+        // ---------- HEART ANIMATION ----------
+        const body = document.querySelector('body');
+        const maxHearts = 15; // Limit number of hearts on screen
+
+        function createHeart(x, y) {
+            const heart = document.createElement('span');
+            let size = Math.random() * 10;
+            heart.style.width = 4 * size + 'px';
+            heart.style.height = 4 * size + 'px';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+            body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+
+        // Mouse hearts (desktop)
+        if (!/Mobi|Android/i.test(navigator.userAgent)) {
+            document.addEventListener('mousemove', e => {
+                if (body.querySelectorAll('span').length < maxHearts) {
+                    createHeart(e.offsetX, e.offsetY);
+                }
+            });
+        }
+
+        // Touch hearts (mobile)
+        document.addEventListener('touchmove', e => {
+            if (body.querySelectorAll('span').length < maxHearts) {
+                const touch = e.touches[0];
+                createHeart(touch.clientX, touch.clientY);
+            }
+        }, { passive: true });
+
+        // ---------- MAILBOX ----------
+        const mailBox = document.querySelector('.mail');
+        const boxmail = document.querySelector('.boxMail');
+        const close = document.querySelector('.fa-xmark');
+
+        if (mailBox && boxmail && close) {
+            mailBox.onclick = function () {
+                mailBox.classList.toggle('active');
+                boxmail.classList.add('active');
+            }
+            close.onclick = function () {
+                boxmail.classList.remove('active');
+            }
+        }
+
+        // ---------- DARK MODE ----------
+        const darkToggle = document.createElement('button');
+        darkToggle.classList.add('dark-toggle');
+        darkToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        darkToggle.onclick = () => {
+            document.body.classList.toggle('dark');
+            const icon = darkToggle.querySelector('i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        };
+        document.body.appendChild(darkToggle);
+    </script>
 </body>
-<script>
-    document.addEventListener('mousemove', function (e) {
-        let body = document.querySelector('body');
-        let heart = document.createElement('span');
-        let x = e.offsetX;
-        let y = e.offsetY;
-        heart.style.left = x + 'px';
-        heart.style.top = y + 'px';
 
-        let size = Math.random() * 10;
-        heart.style.width = 4 * size + 'px';
-        heart.style.height = 4 * size + 'px';
-
-        let transformValue = Math.random() * 360;
-        heart.style.transform = 'rotate(' + transformValue + 'deg)';
-
-        body.appendChild(heart);
-
-        setTimeout(function () {
-            heart.remove();
-        }, 1000)
-    })
-
-    let mailBox = document.querySelector('.mail')
-    let boxmail = document.querySelector('.boxMail')
-    var close = document.querySelector('.fa-xmark')
-    mailBox.onclick = function () {
-        mailBox.classList.toggle('active')
-        boxmail.classList.add('active')
-    }
+</html>
